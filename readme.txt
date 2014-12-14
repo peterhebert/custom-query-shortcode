@@ -1,10 +1,10 @@
-=== Query Shortcode ===
-Contributors: shazdeh
-Plugin Name: Query Shortcode
+=== Custom Query Shortcode ===
+Contributors: peterhebert, shazdeh
+Plugin Name: Custom Query Shortcode
 Tags: query, shortcode, post
 Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 0.2.1
+Tested up to: 4.0.1
+Stable tag: 0.2.1.1
 
 An insanely powerful shortcode that enables you to query anything you want and display it however you like.
 
@@ -47,6 +47,9 @@ Aside from wp_query parameters, the shortcode also supports additional parameter
 
  
  == Installation ==
+
+= 0.2.1.1 =
+* Added a second directory to search for lenses within the current theme - 'partials/custom-query-lenses'.
 
 = 0.2.1 =
 * Added posts_separator parameter.

@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name:    Query Shortcode
-Description:    A powerful shortcode that enables you to query anything you want and display it however you like.
-Author:         Hassan Derakhshandeh
-Version:        0.2.1
-Author URI:     http://tween.ir/
+Plugin Name:    Custom Query Shortcode
+Description:    A powerful shortcode that enables you to query anything you want and display it however you like. This is a forked version of 'Query Shortcode' with one minor mod, to add another directory in the folders that are searched for lenses.
+Author:         Peter Hebert
+Version:        0.2.1.1
+Author URI:     http://peterhebert.com/
 
 
 		This program is free software; you can redistribute it and/or modify
@@ -179,8 +179,8 @@ class Query_Shortcode {
 		// whether or not .php was added
 		$template_slug = rtrim( $template, '.php' );
 		$template = $template_slug . '.php';
-
-		if ( $theme_file = locate_template( array( 'html/lenses/' . $template ) ) ) {
+        // 2014-12-13 - Peter Hebert - added 'partials/query-shortcode-lenses' to array of folders to search for template file
+        if( $theme_file = locate_template( array( 'partials/query-shortcode-lenses/' . $template, 'html/lenses/' . $template ) ) ) {
 			$file = $theme_file;
 		} elseif( file_exists( dirname( __FILE__ ) . '/lenses/' . $template ) ) {
 			$file = 'lenses/' . $template;
