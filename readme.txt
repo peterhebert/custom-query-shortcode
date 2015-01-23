@@ -4,7 +4,7 @@ Plugin Name: Custom Query Shortcode
 Tags: query, shortcode, post
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 
 An insanely powerful shortcode that enables you to query anything you want and display it however you like.
 
@@ -48,6 +48,9 @@ Aside from wp_query parameters, the shortcode also supports additional parameter
 
  
  == Version History ==
+
+= 0.2.3 =
+* Added lens 'article-excerpt-date', which is the same as 'article-excerpt', except with the post date displayed.
 
 = 0.2.2 =
 * Added a filter to allow shortcodes within widget areas, which makes this plugin a lot more useful.
