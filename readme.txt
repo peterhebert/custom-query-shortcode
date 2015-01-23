@@ -3,8 +3,8 @@ Contributors: peterhebert, shazdeh
 Plugin Name: Custom Query Shortcode
 Tags: query, shortcode, post
 Requires at least: 3.3
-Tested up to: 4.0.1
-Stable tag: 0.2.1.1
+Tested up to: 4.1
+Stable tag: 0.2.2
 
 An insanely powerful shortcode that enables you to query anything you want and display it however you like.
 
@@ -28,6 +28,7 @@ With the "lens" parameter you can display the query results in a Tab, Accordion,
 <code>[query posts_per_page="0" post_type="faq" lens="accordion"]</code>
 This will create an accordion widget of all our posts from the "faq" post type. This creates a carousel of latest five featured posts:
 <code>[query posts_per_page="5" featured="true" lens="carousel"]</code>
+You can create your own custom lenses and put them into a directory 'partials/query-shortcode-lenses/' within your current theme folder.
 
 = Other supported parameters =
 Aside from wp_query parameters, the shortcode also supports additional parameters:
@@ -46,7 +47,10 @@ Aside from wp_query parameters, the shortcode also supports additional parameter
 4. Enjoy!
 
  
- == Installation ==
+ == Version History ==
+
+= 0.2.2 =
+* Added a filter to allow shortcodes within widget areas, which makes this plugin a lot more useful.
 
 = 0.2.1.1 =
 * Added a second directory to search for lenses within the current theme - 'partials/custom-query-lenses'.

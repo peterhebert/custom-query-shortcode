@@ -1,9 +1,14 @@
 <?php
 /*
 Plugin Name:    Custom Query Shortcode
-Description:    A powerful shortcode that enables you to query anything you want and display it however you like. This is a forked version of 'Query Shortcode' with one minor mod, to add another directory in the folders that are searched for lenses.
+Description:    A powerful shortcode that enables you to query anything you want 
+                and display it however you like. This is a forked version of 
+                'Query Shortcode' with the following additions:
+                * added folder in current theme directory 'partials/s' that is 
+                searched for lenses.
+                * added filter to allow shortcodes in widget areas
 Author:         Peter Hebert
-Version:        0.2.1.1
+Version:        0.2.2
 Author URI:     http://peterhebert.com/
 
 
@@ -204,3 +209,6 @@ class Query_Shortcode {
 	}
 }
 $query_shortcode = new Query_Shortcode;
+
+// allow shortcodes in widget areas
+add_filter('widget_text', 'do_shortcode');
