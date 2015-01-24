@@ -8,7 +8,7 @@ Description:    A powerful shortcode that enables you to query anything you want
                 searched for lenses.
                 * added filter to allow shortcodes in widget areas
 Author:         Peter Hebert
-Version:        0.2.3
+Version:        0.2.4
 Author URI:     http://peterhebert.com/
 
 

@@ -4,7 +4,7 @@
  *
  * Presents queried posts with date posted, title, thumbnail and excerpt
  *
- * @since 0.2
+ * @since 0.2.3
  */
 
 // The Loop
