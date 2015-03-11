@@ -3,6 +3,7 @@
  * Unordered list lens file
  *
  * This file produces a basic unordered list out of queried posts
+ * with the linked title, and the post date
  *
  * @since 0.2.4
  */
@@ -10,7 +11,7 @@
 if( $posts->have_posts() ) {
 	?><ul class="custom-query">
 		<?php while( $posts->have_posts() ) : $posts->the_post(); ?>
-			<li><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></li>
+			<li><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a> &ndash; <span class="posted-on"><?php the_time('F d, Y'); ?></span></li>
 		<?php endwhile; ?>
 	</ul><?php
 }
