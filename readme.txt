@@ -4,7 +4,7 @@ Plugin Name: Custom Query Shortcode
 Tags: query, shortcode, post
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 0.2.4
+Stable tag: 0.2.5
 
 An insanely powerful shortcode that enables you to query anything you want and display it however you like.
 
@@ -48,6 +48,9 @@ Aside from wp_query parameters, the shortcode also supports additional parameter
 
  
  == Version History ==
+
+= 0.2.5 =
+* Changed lens 'ul', removing post date. I also added lens 'ul-title-date', which is the equivalent of the previous 'ul' lens.
 
 = 0.2.4 =
 * Added lens 'ul', presenting an unordered list of query results with post date displayed.
