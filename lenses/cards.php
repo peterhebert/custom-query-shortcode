@@ -15,7 +15,8 @@ if ( $posts->have_posts() ) { ?>
     <article><?php if ( has_post_thumbnail() ) : ?>
         <div class="post-thumbnail"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_post_thumbnail('medium'); ?></a></div>
       <?php endif; ?>
-      <h5><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h5>
+      <h5 class="article-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h5>
+	  <?php the_excerpt(); ?>
     </article>
 <?php
 		// do something
