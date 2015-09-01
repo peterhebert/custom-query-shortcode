@@ -1,15 +1,13 @@
 <?php
 /*
 Plugin Name:    Custom Query Shortcode
+Plugin URI:     http://rexrana.ca/code/custom-query-shortcode-wordpress-plugin
 Description:    A powerful shortcode that enables you to query anything you want 
-                and display it however you like. This is a forked version of 
-                'Query Shortcode' with the following additions:
-                * added folder in current theme directory 'partials/s' that is 
-                searched for lenses.
-                * added filter to allow shortcodes in widget areas
+                and display it however you like, on both pages and posts, and 
+                in widgets.
+Version:        0.2.5
 Author:         Peter Hebert
-Version:        0.2.4
-Author URI:     http://peterhebert.com/
+Author URI:     http://rexrana.ca
 
 
 		This program is free software; you can redistribute it and/or modify

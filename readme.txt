@@ -5,10 +5,10 @@ Tags: query, shortcode, post
 Requires at least: 3.3
 Tested up to: 4.3
 Stable tag: 0.2.5
-License: GPLv2 or later
+License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-An insanely powerful shortcode that enables you to query anything you want and display it however you like.
+A powerful shortcode that enables you to query anything you want and display it however you like, on both pages and posts, and in widgets.
 
 == Description ==
 
