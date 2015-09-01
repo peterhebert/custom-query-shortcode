@@ -5,6 +5,8 @@ Tags: query, shortcode, post
 Requires at least: 3.3
 Tested up to: 4.1
 Stable tag: 0.2.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 An insanely powerful shortcode that enables you to query anything you want and display it however you like.
 
@@ -46,8 +48,16 @@ Aside from wp_query parameters, the shortcode also supports additional parameter
 3. Now use <code>[query]</code> shortcode anywhere you want.
 4. Enjoy!
 
- 
- == Version History ==
+
+== Frequently Asked Questions ==
+
+no questions have been asked yet.
+
+== Screenshots ==
+
+coming soon
+
+== Changelog ==
 
 = 0.2.5 =
 * Changed lens 'ul', removing post date. I also added lens 'ul-title-date', which is the equivalent of the previous 'ul' lens.
@@ -69,3 +79,7 @@ Aside from wp_query parameters, the shortcode also supports additional parameter
 
 = 0.2 =
 * Added Lens functionality. Now you can build tabs, accordions, and carousels (and build custom ones) out of queried posts. Relies on Twitter Bootstrap framework.
+
+== Upgrade Notice ==
+
+Upgrades are handled just like any other WordPress plugin.
