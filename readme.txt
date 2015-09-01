@@ -3,7 +3,7 @@ Contributors: peterhebert, shazdeh
 Plugin Name: Custom Query Shortcode
 Tags: query, shortcode, post
 Requires at least: 3.3
-Tested up to: 4.1
+Tested up to: 4.3
 Stable tag: 0.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
