@@ -93,7 +93,7 @@ no questions have been asked yet.
 
 == Screenshots ==
 
-coming soon
+1. Example of shortcode syntax
 
 == Changelog ==
 
