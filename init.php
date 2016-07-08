@@ -2,8 +2,8 @@
 /*
 Plugin Name:    Custom Query Shortcode
 Plugin URI:     http://rexrana.ca/code/custom-query-shortcode-wordpress-plugin
-Description:    A powerful shortcode that enables you to query anything you want 
-                and display it however you like, on both pages and posts, and 
+Description:    A powerful shortcode that enables you to query anything you want
+                and display it however you like, on both pages and posts, and
                 in widgets.
 Version:        0.2.5
 Author:         Peter Hebert
@@ -182,8 +182,12 @@ class Query_Shortcode {
 		// whether or not .php was added
 		$template_slug = rtrim( $template, '.php' );
 		$template = $template_slug . '.php';
-        // 2014-12-13 - Peter Hebert - added 'partials/query-shortcode-lenses' to array of folders to search for template file
-        if( $theme_file = locate_template( array( 'partials/query-shortcode-lenses/' . $template, 'html/lenses/' . $template ) ) ) {
+    if( $theme_file = locate_template( array(
+			'query-shortcode-templates/' . $template,
+			'partials/query-shortcode-lenses/' . $template, 
+			'html/lenses/' . $template,
+			$template
+		) ) ) {
 			$file = $theme_file;
 		} elseif( file_exists( dirname( __FILE__ ) . '/lenses/' . $template ) ) {
 			$file = 'lenses/' . $template;
