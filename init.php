@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name:    Custom Query Shortcode
-Plugin URI:     http://rexrana.ca/code/custom-query-shortcode-wordpress-plugin
+Plugin URI:     https://github.com/peterhebert/custom-query-shortcode
 Description:    A powerful shortcode that enables you to query anything you want
                 and display it however you like, on both pages and posts, and
                 in widgets.
-Version:        0.2.5
+Version:        0.3
 Author:         Peter Hebert
-Author URI:     http://rexrana.ca
+Author URI:     http://rexrana.ca/code/custom-query-shortcode-wordpress-plugin
 
 
 		This program is free software; you can redistribute it and/or modify
@@ -184,7 +184,7 @@ class Query_Shortcode {
 		$template = $template_slug . '.php';
     if( $theme_file = locate_template( array(
 			'query-shortcode-templates/' . $template,
-			'partials/query-shortcode-lenses/' . $template, 
+			'partials/query-shortcode-lenses/' . $template,
 			'html/lenses/' . $template,
 			$template
 		) ) ) {
