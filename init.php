@@ -1,13 +1,14 @@
 <?php
 /*
 Plugin Name:    Custom Query Shortcode
-Plugin URI:     https://github.com/peterhebert/custom-query-shortcode
+Plugin URI:     https://en-ca.wordpress.org/plugins/custom-query-shortcode/
 Description:    A powerful shortcode that enables you to query anything you want
                 and display it however you like, on both pages and posts, and
                 in widgets.
-Version:        0.3
+Version:        0.4.0
 Author:         Peter Hebert
-Author URI:     http://rexrana.ca/code/custom-query-shortcode-wordpress-plugin
+Author URI:     https://rexrana.ca/
+Text Domain:    custom-query-shortcode
 
 
 		This program is free software; you can redistribute it and/or modify
@@ -23,6 +24,9 @@ Author URI:     http://rexrana.ca/code/custom-query-shortcode-wordpress-plugin
 		You should have received a copy of the GNU General Public License
 		along with this program; if not, write to the Free Software
 		Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+To contribute to the development of this plugin, visit the project repository on <a href="https://github.com/peterhebert/custom-query-shortcode/">GitHub</a>.
+
 */
 
 defined( 'ABSPATH' ) or die( '-1' );
@@ -59,17 +63,32 @@ class Query_Shortcode {
 	function shortcode( $atts, $template = null ) {
 		if( ! is_array( $atts ) ) return;
 
-		// theme (non-wp_query) arguments
+		$output = '';
+
+		/*
+		theme (non-wp_query) arguments
+
+		'content_limit' - trims post content to this number of words
+		'thumbnail_size' - defined image size name (i.e. 'thumbnail', 'medium')
+		'featured' - include sticky posts
+		'shortcode' - is this executing a shortcode
+		'cols' - columns per row for grid builder
+		'rows' - whether to split output into rows using grid builder
+		'lens'  - PHP template file
+		'twig_template' - Twig template file
+		'posts_separator' - self evident
+
+		 */
 		$args = array(
-			'content_limit'    => 0,
-			'thumbnail_size'   => 'thumbnail',
-			'date_mode'        => 'relative',
-			'featured'         => false,
-			'shortcode'        => false,
-			'cols'             => 1,
-			'rows'             => 1,
-			'lens'             => false,
-			'posts_separator'  => '',
+			'content_limit'   => false,
+			'thumbnail_size'  => 'thumbnail',
+			'featured'        => false,
+			'shortcode'       => false,
+			'cols'            => 1,
+			'rows'            => 1,
+			'lens'            => false,
+			'twig_template'   => false,
+			'posts_separator' => '',
 		);
 
 		$all_args = shortcode_atts( array_merge( array(
@@ -91,42 +110,76 @@ class Query_Shortcode {
 		if( $featured && ( $featured_ids = get_option('sticky_posts' ) ) )
 			$query['post__in'] = wp_parse_id_list( $featured_ids );
 
-		$output = array();
-		ob_start();
-
 		$posts = new WP_Query( $query );
 
-		if( $lens && $lens_file = $this->load_lens( $lens ) ) {
-			include( $lens_file );
-		} else {
-			if( $posts->have_posts() ) : while( $posts->have_posts() ) : $posts->the_post();
-				$keywords = apply_filters( 'query_shortcode_keywords', array(
-					'URL' => get_permalink(),
-					'TITLE' => get_the_title(),
-					'AUTHOR' => get_the_author(),
-					'AUTHOR_URL' => get_author_posts_url( get_the_author_meta( 'ID' ) ),
-					'DATE' => get_the_date(),
-					'THUMBNAIL' => get_the_post_thumbnail( null, $thumbnail_size ),
-					'CONTENT' => ( $content_limit ) ? wp_trim_words( get_the_content(), $content_limit ) : get_the_content(),
-					'EXCERPT' => get_the_excerpt(),
-					'COMMENT_COUNT' => get_comments_number( '0', '1' ),
-				) );
-				$output[] = $this->get_block_template( $template, $keywords );
-			endwhile; endif;
-
-			wp_reset_query();
-			wp_reset_postdata();
-
-			if( $shortcode ) array_map( 'do_shortcode', $output );
-
-			if( $cols > 1 || $rows > 1 ) {
-				$this->build_grid( $output, $cols, $rows );
-			} else {
-				echo implode( $posts_separator, $output );
+		// if 'twig_template' parameter true, and Timber installed, use Twig
+		// note: template must be in a defined Timber template location
+		// http://timber.github.io/timber/#template-locations
+		if( $twig_template && class_exists( 'Timber' ) ) {
+			// see if template file exists in a defined location
+			$twig_locations = Timber::$locations;
+			$template_exists = false;
+			foreach($twig_locations as $loc) {
+				$tmp_file = rtrim ( $loc, '/' ) . '/' . $twig_template;
+				if( file_exists( $tmp_file ) ) {
+					$template_exists = true;
+					break;
+				}
 			}
+			if($template_exists) {
+				// $data = array( 'posts' => $posts->get_posts() );
+
+				// loop through results and return as Timber Post objects
+				$timber_post_data = array();
+				foreach($posts->get_posts() as $post) {
+					$timber_post_data[] = new Timber\Post($post->ID);
+				}
+
+				$output = Timber::compile( $twig_template, array('posts' => $timber_post_data) );
+			} else {
+				$output = __('Cannot find specified Twig template file', 'custom-query-shortcode');
+			}
+
+
+		} else {
+			// otherwise use output buffering and includes
+			$ob = array();
+			ob_start();
+
+			if( $lens && $lens_file = $this->load_lens( $lens ) ) {
+				include( $lens_file );
+			} else {
+				if( $posts->have_posts() ) : while( $posts->have_posts() ) : $posts->the_post();
+					$keywords = apply_filters( 'query_shortcode_keywords', array(
+						'URL' => get_permalink(),
+						'TITLE' => get_the_title(),
+						'AUTHOR' => get_the_author(),
+						'AUTHOR_URL' => get_author_posts_url( get_the_author_meta( 'ID' ) ),
+						'DATE' => get_the_date(),
+						'THUMBNAIL' => get_the_post_thumbnail( null, $thumbnail_size ),
+						'CONTENT' => ( $content_limit ) ? wp_trim_words( get_the_content(), $content_limit ) : get_the_content(),
+						'EXCERPT' => get_the_excerpt(),
+						'COMMENT_COUNT' => get_comments_number( '0', '1' ),
+					) );
+					$ob[] = $this->get_block_template( $template, $keywords );
+				endwhile; endif;
+
+				if( $shortcode ) array_map( 'do_shortcode', $output );
+
+				if( $cols > 1 || $rows > 1 ) {
+					$this->build_grid( $ob, $cols, $rows );
+				} else {
+					echo implode( $posts_separator, $ob );
+				}
+			}
+
+			$output = ob_get_clean();
 		}
 
-		return ob_get_clean();
+		wp_reset_query();
+		wp_reset_postdata();
+
+		return $output;
 	}
 
 	function build_grid( $items, $cols, $rows ) {
@@ -209,6 +262,7 @@ class Query_Shortcode {
 		if( is_rtl() ) $library = 'library-rtl.css'; else $library = 'library.css';
 		wp_enqueue_style( 'layouts-grid', plugins_url( 'css/' . $library, __FILE__ ) );
 	}
+
 }
 $query_shortcode = new Query_Shortcode;
 

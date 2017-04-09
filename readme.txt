@@ -3,8 +3,8 @@ Contributors: peterhebert, shazdeh
 Plugin Name: Custom Query Shortcode
 Tags: query, shortcode, post
 Requires at least: 3.3
-Tested up to: 4.5.3
-Stable tag: 0.3
+Tested up to: 4.7.3
+Stable tag: 0.4.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ Aside from WP_Query parameters, the shortcode also supports the following additi
 * *content_limit*: to limit the number of words of the {CONTENT} var; by default it's "0" which means it outputs the whole content.
 * *posts_separator*: text to display between individual posts.
 * *lens*: custom output template - see description below.
+* *twig_template*: output template using Twig templating engine - requires the Timber library.
 
 = Formatting the output =
 You can define how you want to format the output inline within an opening <code>[query]</code> and closing <code>[/query]</code> tag.
@@ -77,6 +78,13 @@ You can create your own custom templates and put them into one of these pre-defi
 Or simply specify your own subfolder in the 'template' parameter:
 <code>[query lens="folder/template-name"]</code>
 
+= Twig Template Support =
+Starting with version 0.4, you can use Twig templates for your output. Support for Twig is provided by the <a href="https://github.com/timber/timber">Timber</a> library.
+
+This requires that Timber be be installed as a <a href="https://en-ca.wordpress.org/plugins/timber-library/">plugin</a> or <a href="http://timber.github.io/timber/#getting-started">included in your theme</a>.
+
+To use a Twig template for your query output, simply use the 'twig_template' parameter instead of the 'lens' parameter, and provide the path to your template:
+<code>[query twig_template="folder/template-name.twig"]</code>
 
 == Installation ==
 
@@ -96,6 +104,9 @@ no questions have been asked yet.
 1. Example of shortcode syntax
 
 == Changelog ==
+
+= 0.4.0 =
+* Added Twig templating support via the Timber Library
 
 = 0.3 =
 * Added a new directory to search for lenses within the current theme - 'query-shortcode-templates'
