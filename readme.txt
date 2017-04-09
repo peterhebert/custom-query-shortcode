@@ -75,7 +75,7 @@ You can create your own custom templates and put them into one of these pre-defi
 * 'partials/query-shortcode-lenses/'
 * 'html/lenses/'
 
-Or simply specify your own subfolder in the 'template' parameter:
+Or simply specify your own subfolder in the 'lens' parameter:
 <code>[query lens="folder/template-name"]</code>
 
 = Twig Template Support =
