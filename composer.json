@@ -1,0 +1,21 @@
+{
+    "name": "peterhebert/custom-query-blocks",
+    "description": "A collection of blocks for WordPress based on custom queries",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Peter Hebert",
+            "email": "peter@peterhebert.com"
+        }
+    ],
+    "require": {
+        "timber/timber": "^1.13",
+        "htmlburger/carbon-fields": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "CustomQueryBlocks\\": "src/"
+        }
+    }
+}

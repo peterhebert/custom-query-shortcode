@@ -1,5 +1,5 @@
 # Custom Query Shortcode
-**Contributors:** peterhebert, shazdeh  
+**Contributors:** peterhebert, shazdeh
 Plugin Name: Custom Query Shortcode
 **Tags:** query, shortcode, post  
 **Requires at least:** 3.3  
@@ -18,15 +18,15 @@ This plugin gives you a `[query]` shortcode which enables you to query and outpu
 
 ### Usage
 
-You can use all parameters supported by the [WP_Query](http://codex.wordpress.org/Class_Reference/WP_Query) class to filter the posts; you can query for specific post types, categories, tags, authors, etc.
+You can use all parameters supported by the [WP_Query](https://developer.wordpress.org/reference/classes/wp_query/) class to filter the posts; you can query for specific post types, categories, tags, authors, etc.
 
 
 ### Other supported parameters
 
-Aside from [WP_Query parameters](https://codex.wordpress.org/Class_Reference/WP_Query#Parameters), the shortcode also supports the following additional parameters:
+Aside from [WP_Query parameters](https://developer.wordpress.org/reference/classes/wp_query/#parameters), the shortcode also supports the following additional parameters:
 
 * *featured*: to query for sticky posts which by default are excluded from the query.
-* *thumbnail_size*: to specify the size of the {THUMBNAIL} images. You can use <a href="http://codex.wordpress.org/Function_Reference/add_image_size#Reserved_Image_Size_Names">built-in image sizes</a> or custom ones you've defined.
+* *thumbnail_size*: to specify the size of the {THUMBNAIL} images. You can use <a href="https://developer.wordpress.org/reference/functions/add_image_size/#Reserved_Image_Size_Names">built-in image sizes</a> or custom ones you've defined.
 * *content_limit*: to limit the number of words of the {CONTENT} var; by default it's "0" which means it outputs the whole content.
 * *posts_separator*: text to display between individual posts.
 * *lens*: custom output template - see description below.

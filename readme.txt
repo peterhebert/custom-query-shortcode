@@ -16,14 +16,14 @@ This plugin gives you <code>[query]</code> shortcode which enables you to query 
 
 = Usage =
 
-You can use all parameters supported by <a href="http://codex.wordpress.org/Class_Reference/WP_Query">WP_Query class</a> to filter the posts; you can query for specific post types, categories, tags, authors, etc.
+You can use all parameters supported by <a href="https://developer.wordpress.org/reference/classes/wp_query/">WP_Query</a> class to filter the posts; you can query for specific post types, categories, tags, authors, etc.
 
 = Other supported parameters =
 
 Aside from WP_Query parameters, the shortcode also supports the following additional parameters:
 
 * *featured*: to query for sticky posts which by default are excluded from the query.
-* *thumbnail_size*: to specify the size of the {THUMBNAIL} images. You can use <a href="http://codex.wordpress.org/Function_Reference/add_image_size#Reserved_Image_Size_Names">built-in image sizes</a> or custom ones you've defined.
+* *thumbnail_size*: to specify the size of the {THUMBNAIL} images. You can use <a href="https://developer.wordpress.org/reference/functions/add_image_size/#Reserved_Image_Size_Names">built-in image sizes</a> or custom ones you've defined.
 * *content_limit*: to limit the number of words of the {CONTENT} var; by default it's "0" which means it outputs the whole content.
 * *posts_separator*: text to display between individual posts.
 * *lens*: custom output template - see description below.
