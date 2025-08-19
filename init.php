@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/src/class-query-shortcode.php';
 
-$query_shortcode = new CustomQueryShortCode\Query_Shortcode();
+$query_shortcode = new Query_Shortcode();
 
 // Allow shortcodes in widget areas.
 add_filter( 'widget_text', 'do_shortcode' );

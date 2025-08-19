@@ -5,18 +5,37 @@
  * @package custom-query-shortcode
  */
 
-namespace CustomQueryShortCode;
-
-use WP_Post;
-
 /**
  * Class to create a Custom Query Shortcode instance.
  */
 class Query_Shortcode {
 
+	/**
+	 * Theme related arguments for the shortcode.
+	 *
+	 * @var array
+	 */
 	public $theme_args;
+
+	/**
+	 * Query related arguments for the shortcode.
+	 *
+	 * @var array
+	 */
 	public $query_args;
+
+	/**
+	 * Store the WP_Query object
+	 *
+	 * @var WP_Query
+	 */
 	public $query;
+
+	/**
+	 * Markup to be output by the shortcode.
+	 *
+	 * @var string
+	 */
 	public $output;
 
 	/**
@@ -100,7 +119,7 @@ class Query_Shortcode {
 		 *
 		 * @link https://timber.github.io/docs/v1/guides/template-locations/
 		*/
-		if ( array_key_exists( 'twig_template', $atts ) && class_exists( 'Timber' ) ) {
+		if ( array_key_exists( 'twig_template', $atts ) && class_exists( 'Timber\Timber' ) ) {
 
 			$this->output = $this->load_twig_template( $atts['twig_template'] );
 
@@ -255,39 +274,25 @@ class Query_Shortcode {
 	 * Display template using Twig via TImber.
 	 *
 	 * @param string $template Template file to search for.
-	 * @return string Output of template.
+	 * @return string Output of template, or an empty string if template not found.
 	 */
 	protected function load_twig_template( string $template ) {
 
-			// see if template file exists in a defined location.
-			$twig_locations = Timber::$locations;
+		// Initialize Timber.
+		Timber\Timber::init();
 
-			// sanitize filename, to avoid path traversal.
-			$safe_twig_filename = sanitize_file_name( preg_replace( '/^(\.\.\/)+/', '', $atts['twig_template'] ) );
+		// sanitize filename, to avoid path traversal.
+		$safe_twig_filename = sanitize_file_name( preg_replace( '/^(\.\.\/)+/', '', $template ) );
 
-		foreach ( $twig_locations as $loc ) {
-			$tmp_file = rtrim( $loc, '/' ) . '/' . $safe_twig_filename;
-			if ( file_exists( $tmp_file ) ) {
-				$template = $tmp_file;
-				break;
-			}
-		}
-		if ( $template ) {
-			$data = array( 'posts' => $this->query->get_posts() );
+		$context = Timber::context();
 
-			// loop through results and return as Timber Post objects.
-			$timber_post_data = array();
-			foreach ( $this->query->get_posts() as $post ) {
-				$timber_post_data[] = new Timber\Post( $post->ID );
-			}
+		$context['posts'] = Timber::get_posts( $this->query_args );
 
-			$output = Timber::compile( $template, array( 'posts' => $timber_post_data ) );
-		} else {
-			$output = __( 'Cannot find specified Twig template file', 'custom-query-shortcode' );
-		}
+		$output = Timber::compile( $template, $context );
 
 		return $output;
 	}
+
 	/**
 	 * Queue the stylesheet file required to make the grid options work
 	 * This is the same CSS file used in Widgets In Columns plugin
