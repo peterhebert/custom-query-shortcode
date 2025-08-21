@@ -5,7 +5,7 @@ Plugin Name: Custom Query Shortcode
 **Tags:** query, shortcode, post \
 **Requires at least:** 3.3 \
 **Tested up to:** 6.8.2 \
-**Stable tag:** 0.4.0 \
+**Stable tag:** 0.5.0 \
 **License:** GPLv2 \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,9 +118,14 @@ no questions have been asked yet.
 
 ## Changelog
 
+### 0.5.0
+
+* Security release - fixes to address path traversal vulnerability as noted in CVE-2025-8562.
+* Added localization template .pot
+
 ### 0.4.0
 
-* Added Twig templating support via the Timber Library
+* Added Twig templating support via the Timber Library - note we do not include Timber with this plugin.
 
 ### 0.3
 
