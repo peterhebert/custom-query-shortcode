@@ -9,9 +9,10 @@
  */
 
 // The Loop.
-if ( $posts->have_posts() ) :
-	while ( $posts->have_posts() ) :
-		$posts->the_post(); ?>
+if ( $this->query->have_posts() ) :
+	while ( $this->query->have_posts() ) :
+		$this->query->the_post();
+		?>
 <article><?php if ( has_post_thumbnail() ) : ?>
 	<div class="posted-on"><?php the_time( 'F d, Y' ); ?></div>
 	<div class="post-thumbnail"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_post_thumbnail( 'medium' ); ?></a></div>

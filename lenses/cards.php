@@ -9,11 +9,12 @@
  */
 
 // The Loop.
-if ( $posts->have_posts() ) : ?>
+if ( $this->query->have_posts() ) : ?>
 <div class="cards">
 	<?php
-	while ( $posts->have_posts() ) :
-		$posts->the_post();
+	while ( $this->query->have_posts() ) :
+		$this->query->the_post();
+
 		?>
 	<article>
 		<?php if ( has_post_thumbnail() ) : ?>
