@@ -17,9 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-require_once __DIR__ . '/src/class-query-shortcode.php';
+// Load class for shortcode.
+require_once __DIR__ . '/src/class-queryshortcode.php';
 
-$query_shortcode = new Query_Shortcode();
+// Instantiate the main class.
+$query_shortcode = new QueryShortcode();
 
 // Allow shortcodes in widget areas.
 add_filter( 'widget_text', 'do_shortcode' );
