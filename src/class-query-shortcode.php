@@ -39,6 +39,13 @@ class Query_Shortcode {
 	public $output;
 
 	/**
+	 * Acceptable slugs for 'lens' files included with plugin.
+	 *
+	 * @var array
+	 */
+	private array $lenses;
+
+	/**
 	 * Constructor for the class.
 	 */
 	public function __construct() {
@@ -57,15 +64,37 @@ class Query_Shortcode {
 			'twig_template'   => false,
 			'posts_separator' => '',
 		);
+
 		$this->query_args = array(
-			'post_type'           => 'post',
+			'attachment_id'       => null,
+			'attachment'          => null,
+			'author_name'         => null,
 			'author'              => null,
-			// no sticky posts at the top by default.
+			'cat'                 => null,
+			'category_name'       => null,
+			'hour'                => null,
 			'ignore_sticky_posts' => 1,
-			// no sticky posts in the results by default.
+			'minute'              => null,
+			'name'                => null,
+			'order'               => 'DESC',
+			'p'                   => 0,
+			'page_id'             => 0,
+			'paged'               => 0,
+			'pagename'            => null,
 			'post__not_in'        => get_option( 'sticky_posts' ),
+			'post_parent'         => null,
+			'post_type'           => 'post',
+			'posts_per_page'      => get_option( 'posts_per_page' ),
+			'second'              => null,
+			'subpost_id'          => null,
+			'subpost'             => null,
+			'tag_id'              => null,
+			'tag'                 => null,
+			'title'               => null,
 		);
 		$this->output     = '';
+
+		$this->lenses = array( 'accordion', 'article-excerpt-date', 'article-excerpt', 'cards', 'carousel', 'tabs', 'ul', 'ul-title-date' );
 	}
 
 	/**
@@ -112,7 +141,7 @@ class Query_Shortcode {
 			$this->query_args['post__in'] = wp_parse_id_list( $featured_ids );
 		}
 
-		$this->query = new \WP_Query( $this->query_args );
+		$this->query = new WP_Query( $this->query_args );
 
 		/** If 'twig_template' parameter exists, and Timber installed, use Twig.
 		 *  Note: template must be in a defined Timber template location.
@@ -124,13 +153,13 @@ class Query_Shortcode {
 			$this->output = $this->load_twig_template( $atts['twig_template'] );
 
 		} elseif ( array_key_exists( 'lens', $atts ) ) {
-			// sanitize filename, to avoid path traversal.
-			$safe_filename = sanitize_file_name( preg_replace( '/^(\.\.\/)+/', '', $atts['lens'] ) );
-			$lens_file     = $this->load_lens( $safe_filename );
+
+			$lens_file = $this->load_lens( $atts['lens'] );
 
 			if ( $lens_file ) {
 				ob_start();
 				require_once $lens_file;
+
 				$this->output = ob_get_clean();
 			}
 		} else {
@@ -247,9 +276,10 @@ class Query_Shortcode {
 	 **/
 	protected function load_lens( $template ) {
 
-		// whether or not .php was added.
-		$template_slug = rtrim( $template, '.php' );
-		$template      = $template_slug . '.php';
+		// strip out path, just base name, to avoid path traversal.
+		$template_slug = basename( $template );
+		// re-add .php extension.
+		$template = $template_slug . '.php';
 
 		$theme_file = locate_template(
 			array(
@@ -259,10 +289,25 @@ class Query_Shortcode {
 				$template,
 			)
 		);
-		if ( $theme_file ) {
+
+		// path traversal mitigation, ensuure it is in parent or child theme directory.
+		$template_in_theme_or_parent_theme = (
+			// Template is in current theme folder.
+			0 === strpos( realpath( $template ), realpath( get_stylesheet_directory() ) ) ||
+			// Template is in current or parent theme folder.
+			0 === strpos( realpath( $template ), realpath( get_template_directory() ) )
+		);
+
+		$lens_file_approved = in_array( $template_slug, $this->lenses, true );
+
+		if ( $theme_file && $template_in_theme_or_parent_theme ) {
+
 			$file = $theme_file;
-		} elseif ( file_exists( __DIR__ . '/lenses/' . $template ) ) {
-			$file = 'lenses/' . $template;
+
+		} elseif ( $lens_file_approved ) {
+
+			$file = plugin_dir_path( __DIR__ ) . 'lenses/' . $template;
+
 		} else {
 			return false;
 		}
@@ -271,7 +316,7 @@ class Query_Shortcode {
 	}
 
 	/**
-	 * Display template using Twig via TImber.
+	 * Display template using Twig via Timber.
 	 *
 	 * @param string $template Template file to search for.
 	 * @return string Output of template, or an empty string if template not found.
