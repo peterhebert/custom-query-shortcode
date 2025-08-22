@@ -8,7 +8,7 @@
 /**
  * Class to create a Custom Query Shortcode instance.
  */
-class Query_Shortcode {
+class QueryShortcode {
 
 	/**
 	 * Theme related arguments for the shortcode.
@@ -277,9 +277,17 @@ class Query_Shortcode {
 	protected function load_lens( $template ) {
 
 		// strip out path, just base name, to avoid path traversal.
-		$template_slug = basename( $template );
-		// re-add .php extension.
-		$template = $template_slug . '.php';
+		$template_slug = pathinfo( $template, PATHINFO_FILENAME );
+
+		// sanitize file path, to avoid path traversal.
+		$safe_path = sanitize_file_name( preg_replace( '/^(\.\.\/)+/', '', pathinfo( $template, PATHINFO_DIRNAME ) ) );
+		// if path is not empty, add trailing slash.
+		if ( '' !== $safe_path ) {
+			$safe_path .= '/';
+		}
+
+		// re-compose template name with .php extension.
+		$template = $safe_path . $template_slug . '.php';
 
 		$theme_file = locate_template(
 			array(

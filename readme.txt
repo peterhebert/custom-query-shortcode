@@ -52,8 +52,10 @@ With the "lens" parameter you can customize the display of the query results usi
 * **cards**: displays the post thumb above the header with linked post title, followed by the excerpt.
 
 <h5>Bootstrap lenses</h5>
-Some pre-defined lenses/templates are provided which use JavaScript Components from the <a href="http://getbootstrap.com/">Bootstrap</a> CSS framework.
+Some pre-defined lenses/templates are provided which use JavaScript Components from the <a href="http://getbootstrap.com/">Bootstrap</a> CSS framework. The generated markup is compliant with the 5.x version of Bootstrap.
+
 This feature relies on Bootstrap library to be already loaded on the page, the plugin does *not* include it.
+
 If you're using a Bootstrap-based theme, this *should* work; otherwise you can use the <a href="http://wordpress.org/extend/plugins/bootstrap/">Bootstrap plugin</a>).
 
 <h6><a href="http://getbootstrap.com/javascript/#tabs">Tabs</a></h6>
