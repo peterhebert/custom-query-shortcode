@@ -1,0 +1,21 @@
+{
+    "name": "peterhebert/custom-query-shortcode",
+    "description": "A WordPress plugin that provides a shortcode to perform queries of your content.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Peter Hebert",
+            "email": "peter@peterhebert.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "wp-cli/i18n-command": "^2",
+        "wpreadme2markdown/wp2md": "^4.1"
+    },
+    "scripts": {
+      "makepot": "wp i18n make-pot .",
+      "readme": "wp2md -i readme.txt -o README.md"
+    }
+}

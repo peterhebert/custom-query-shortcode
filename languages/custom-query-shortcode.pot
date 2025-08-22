@@ -1,0 +1,40 @@
+# Copyright (C) 2025 Peter Hebert
+# This file is distributed under the same license as the Custom Query Shortcode plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Custom Query Shortcode 0.5.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/custom-query-shortcode\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-08-21T20:13:16+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: custom-query-shortcode\n"
+
+#. Plugin Name of the plugin
+#: init.php
+msgid "Custom Query Shortcode"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: init.php
+msgid "https://github.com/peterhebert/custom-query-shortcode"
+msgstr ""
+
+#. Description of the plugin
+#: init.php
+msgid "A powerful shortcode that enables you to query anything you want"
+msgstr ""
+
+#. Author of the plugin
+#: init.php
+msgid "Peter Hebert"
+msgstr ""
+
+#. Author URI of the plugin
+#: init.php
+msgid "https://peterhebert.com/"
+msgstr ""

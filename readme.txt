@@ -3,8 +3,8 @@ Contributors: peterhebert, shazdeh
 Plugin Name: Custom Query Shortcode
 Tags: query, shortcode, post
 Requires at least: 3.3
-Tested up to: 5.3.2
-Stable tag: 0.4.0
+Tested up to: 6.8.2
+Stable tag: 0.5.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ This plugin gives you <code>[query]</code> shortcode which enables you to query 
 
 = Usage =
 
-You can use all parameters supported by <a href="http://codex.wordpress.org/Class_Reference/WP_Query">WP_Query class</a> to filter the posts; you can query for specific post types, categories, tags, authors, etc.
+You can use most parameters supported by <a href="http://codex.wordpress.org/Class_Reference/WP_Query">WP_Query class</a> to filter the posts; you can query for specific post types, categories, tags, authors, etc.
 
 = Other supported parameters =
 
@@ -52,8 +52,10 @@ With the "lens" parameter you can customize the display of the query results usi
 * **cards**: displays the post thumb above the header with linked post title, followed by the excerpt.
 
 <h5>Bootstrap lenses</h5>
-Some pre-defined lenses/templates are provided which use JavaScript Components from the <a href="http://getbootstrap.com/">Bootstrap</a> CSS framework.
+Some pre-defined lenses/templates are provided which use JavaScript Components from the <a href="http://getbootstrap.com/">Bootstrap</a> CSS framework. The generated markup is compliant with the 5.x version of Bootstrap.
+
 This feature relies on Bootstrap library to be already loaded on the page, the plugin does *not* include it.
+
 If you're using a Bootstrap-based theme, this *should* work; otherwise you can use the <a href="http://wordpress.org/extend/plugins/bootstrap/">Bootstrap plugin</a>).
 
 <h6><a href="http://getbootstrap.com/javascript/#tabs">Tabs</a></h6>
@@ -81,10 +83,16 @@ Or simply specify your own subfolder in the 'lens' parameter:
 = Twig Template Support =
 Starting with version 0.4, you can use Twig templates for your output. Support for Twig is provided by the <a href="https://github.com/timber/timber">Timber</a> library.
 
-This requires that Timber be be installed as a <a href="https://en-ca.wordpress.org/plugins/timber-library/">plugin</a> or <a href="http://timber.github.io/timber/#getting-started">included in your theme</a>.
+This requires that Timber 2.x be installed as a <a href="https://timber.github.io/docs/v2/installation/installation/">Composer dependency</a>.
 
-To use a Twig template for your query output, simply use the 'twig_template' parameter instead of the 'lens' parameter, and provide the path to your template:
-<code>[query twig_template="folder/template-name.twig"]</code>
+To use a Twig template for your query output, simply use the &#39;twig_template&#39; parameter instead of the &#39;lens&#39; parameter, and provide the path to your template. By default, Timber looks within the <code>views</code> folder in your active theme. You can <a href="https://timber.github.io/docs/v2/guides/template-locations/#changing-the-default-folder-for-twig-files">change the default template location</a> in Timber.
+
+Examples:
+
+<pre><code>
+[query twig_template="template-name.twig"]
+[query twig_template="folder/template-name.twig"]
+</code></pre>
 
 == Installation ==
 
@@ -105,8 +113,12 @@ no questions have been asked yet.
 
 == Changelog ==
 
+= 0.5.0 =
+* Security release - fixes to address path traversal vulnerability as noted in CVE-2025-8562.
+* Added localization template .pot
+
 = 0.4.0 =
-* Added Twig templating support via the Timber Library
+* Added Twig templating support via the Timber Library - note we do not include Timber with this plugin.
 
 = 0.3 =
 * Added a new directory to search for lenses within the current theme - 'query-shortcode-templates'
