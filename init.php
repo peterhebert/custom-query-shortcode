@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:    Custom Query Shortcode
- * Plugin URI:     https://github.com/peterhebert/custom-query-shortcode
+ * Plugin URI:     https://peterhebert.com/en/code/custom-query-shortcode
  * Description:    A powerful shortcode that enables you to query anything you want
  *                 and display it however you like, on both pages and posts, and in widgets.
  * Version:        0.5.0
