@@ -81,7 +81,6 @@ class QueryShortcode {
 			'page_id'             => 0,
 			'paged'               => 0,
 			'pagename'            => null,
-			'post__not_in'        => get_option( 'sticky_posts' ),
 			'post_parent'         => null,
 			'post_type'           => 'post',
 			'posts_per_page'      => get_option( 'posts_per_page' ),
@@ -135,6 +134,21 @@ class QueryShortcode {
 			$atts
 		);
 
+		// Store the post__not_in parameter and remove it from query args.
+		$exclude_ids = array();
+		if ( array_key_exists( 'post__not_in', $atts ) ) {
+			$exclude_ids = wp_parse_id_list( $atts['post__not_in'] );
+			unset( $this->query_args['post__not_in'] );
+		}
+
+		// Store the original posts_per_page value.
+		$requested_posts = $this->query_args['posts_per_page'];
+
+		// Fetch more posts to compensate for excluded ones.
+		if ( ! empty( $exclude_ids ) && $requested_posts > 0 ) {
+			$this->query_args['posts_per_page'] = $requested_posts + count( $exclude_ids );
+		}
+
 		// get the featured post IDs if "featured" argument is true, and sticky posts exist.
 		$featured_ids = get_option( 'sticky_posts' );
 		if ( array_key_exists( 'featured', $atts ) && is_array( $featured_ids ) && 0 < count( $featured_ids ) ) {
@@ -142,6 +156,25 @@ class QueryShortcode {
 		}
 
 		$this->query = new WP_Query( $this->query_args );
+
+		// Filter out excluded posts after the query.
+		if ( ! empty( $exclude_ids ) ) {
+			$this->query->posts = array_filter(
+				$this->query->posts,
+				function ( $post ) use ( $exclude_ids ) {
+					return ! in_array( $post->ID, $exclude_ids, true );
+				}
+			);
+
+			// Trim to requested number of posts.
+			if ( $requested_posts > 0 && count( $this->query->posts ) > $requested_posts ) {
+				$this->query->posts = array_slice( $this->query->posts, 0, $requested_posts );
+			}
+
+			// Re-index array and update post count.
+			$this->query->posts      = array_values( $this->query->posts );
+			$this->query->post_count = count( $this->query->posts );
+		}
 
 		/** If 'twig_template' parameter exists, and Timber installed, use Twig.
 		 *  Note: template must be in a defined Timber template location.

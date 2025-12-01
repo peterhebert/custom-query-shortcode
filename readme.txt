@@ -113,6 +113,9 @@ no questions have been asked yet.
 
 == Changelog ==
 
+= 0.6.0 =
+* remove `post__not_in` from the query - loop through results and remove matching posts instead. See https://docs.wpvip.com/databases/optimize-queries/using-post__not_in/
+
 = 0.5.0 =
 * Security release - fixes to address path traversal vulnerability as noted in CVE-2025-8562.
 * Added localization template .pot

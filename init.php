@@ -4,7 +4,7 @@
  * Plugin URI:     https://peterhebert.com/en/code/custom-query-shortcode
  * Description:    A powerful shortcode that enables you to query anything you want
  *                 and display it however you like, on both pages and posts, and in widgets.
- * Version:        0.5.0
+ * Version:        0.6.0
  * Author:         Peter Hebert
  * Author URI:     https://peterhebert.com/
  * Text Domain:    custom-query-shortcode
